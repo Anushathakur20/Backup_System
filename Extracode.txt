@@ -1,0 +1,336 @@
+Sub SelectFilteredValue()
+    Dim SourceWorkbook As Workbook
+    Dim targetWorkbook As Workbook
+    Dim SourceWorksheet As Worksheet
+    Dim targetWorksheet As Worksheet
+    Dim pt As PivotTable
+    Dim pf As PivotField
+    Dim pt2 As PivotTable
+    Dim pf2 As PivotField
+    Dim pidest As PivotItem
+    Dim pi As PivotItem
+    Dim pi2 As PivotItem
+    Dim rngList As range
+    Dim strMsg As String
+    Dim pc As PivotCache
+    Dim srcFilePath As String
+    Dim targetFilePath As String
+    
+     'FilePaths = Application.GetOpenFilename("Excel Files (*.xls; *.xlsx; *.xlsb), *.xls; *.xlsx; *.xlsb", , "Select Multiple Excel Files", , True)
+    srcFilePath = Application.GetOpenFilename("Excel Files (*.xls; *.xlsx; *.xlsb), *.xls; *.xlsx; *.xlsb")
+    targetFilePath = Application.GetOpenFilename("Excel Files (*.xls; *.xlsx; *.xlsb), *.xls; *.xlsx; *.xlsb")
+   
+   
+    ' Check if the user selected a file
+    If srcFilePath <> "False" Then
+        
+        ' Open the selected source workbook
+        Set SourceWorkbook = Workbooks.Open(srcFilePath)
+        ' Set the target workbook (the active workbook)
+        Set targetWorkbook = Workbooks.Open(targetFilePath)
+        
+        ' Set the source and target worksheets
+        Set SourceWorksheet = SourceWorkbook.Sheets("Sheet1") ' Replace with the source sheet name
+        Set targetWorksheet = targetWorkbook.Sheets("Summary") ' Replace with the target sheet name
+        
+        Set pt = SourceWorksheet.PivotTables(1)
+       
+        ' change field as needed
+        Set pf = pt.PivotFields("Personnel Area")
+       
+        For Each pi In pf.PivotItems
+        pi.Visible = True
+            For Each pi2 In pf.PivotItems
+            
+             If pi <> pi2 Then
+              
+              pi2.Visible = False
+             
+             Else
+            
+             pt.TableRange1.Copy: range("F4").PasteSpecial (xlPasteValuesAndNumberFormats)
+             pt.TableRange1.Copy: range("F4").PasteSpecial (xlPasteFormats)
+             
+             Dim srcRangePivot As range
+             Dim DestRangepivot As range
+             
+             ' Define the source range to copy
+              Set srcRangePivot = SourceWorksheet.range("A6:D20")
+                 
+              If pi = "A099" Then
+              Set DestRangepivot = targetWorksheet.range("A22:D36")
+             ' Range("A4:D36").ClearFormats
+                'pt.TableRange1.Copy: Range("A4:D36").PasteSpecial (xlPasteFormats)
+              ElseIf pi = "A396" Then
+              'Range("F4:I36").ClearFormats
+              'pt.TableRange1.Copy: Range("F4:I36").PasteSpecial (xlPasteFormats)
+              'Set DestRangepivot = targetWorksheet.Range("F22:I36")
+              ElseIf pi = "A928" Then
+              'Range("K4:N36").ClearFormats
+              ' pt.TableRange1.Copy: Range("K4:N36").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("K22:N36")
+              ElseIf pi = "AA21" Then
+               'Range("P4:S36").ClearFormats
+               'pt.TableRange1.Copy: Range("P4:S36").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("P22:S36")
+              ElseIf pi = "AA88" Then
+               'Range("P4:S36").ClearFormats
+              'pt.TableRange1.Copy: Range("U4").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("U22:X36")
+              ElseIf pi = "S106" Then
+              'Range("Z4:AC36").ClearFormats
+              'pt.TableRange1.Copy: Range("Z4:AC36").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("Z22:AC36")
+              ElseIf pi = "S109" Then
+               'Range("AE4:AH36").ClearFormats
+                'pt.TableRange1.Copy: Range("AE4:AH36").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("AE22:AH36")
+              ElseIf pi = "S110" Then
+              'Range("AJ4:AM36").ClearFormats
+               'pt.TableRange1.Copy: Range("AJ4:AM36").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("AJ22:AM36")
+              ElseIf pi = "S115" Then
+               'Range("AO4:AR36").ClearFormats
+               'pt.TableRange1.Copy: Range("AO4:AR36").PasteSpecial (xlPasteFormats)
+               Set DestRangepivot = targetWorksheet.range("AJ22:AM36")
+              ElseIf pi = "S119" Then
+                ' Range("AT4:AW36").ClearFormats
+               'pt.TableRange1.Copy: Range("AT4:AW36").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("AT22:AW36")
+              ElseIf pi = "S121" Then
+              'Range("AY4:BB36").ClearFormats
+               'pt.TableRange1.Copy: Range("AY4").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("AY22:BB36")
+              ElseIf pi = "S127" Then
+               'Range("BD4:BG36").ClearFormats
+              ' pt.TableRange1.Copy: Range("BD4").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("BD22:BG36")
+              ElseIf pi = "S131" Then
+              'Range("BI4:BL36").ClearFormats
+              'pt.TableRange1.Copy: Range("BI4:BL36").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("BI22:BL36")
+              ElseIf pi = "S134" Then
+               'Range("BN4:BQ36").ClearFormats
+               'pt.TableRange1.Copy: Range("BN4").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("BN22:BQ36")
+               ElseIf pi = "S136" Then
+                 'Range("BS4:BV36").ClearFormats
+                'pt.TableRange1.Copy: Range("BS4").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("BS22:BV36")
+               ElseIf pi = "S141" Then
+               'Range("BX4:CA36").ClearFormats
+                'pt.TableRange1.Copy: Range("BX4").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("BX22:CA36")
+               ElseIf pi = "S148" Then
+               'Range("CC4:CF36").ClearFormats
+                'pt.TableRange1.Copy: Range("CC4").PasteSpecial (xlPasteFormats)
+              Set DestRangepivot = targetWorksheet.range("CC22:CF36")
+             End If
+            
+               DestRangepivot.ClearFormats
+             ' Copy the data from the source range
+                srcRangePivot.Copy: DestRangepivot.PasteSpecial (xlPasteFormats)
+                
+              
+              End If
+            Next pi2
+    
+        Next pi
+        If Len(strMsg) > 0 Then MsgBox "The following items were not found in the list:" & strMsg
+        
+        Else
+            MsgBox "No file selected. Exiting."
+        End If
+
+End Sub
+Sub ListMissingItems()
+    Dim pt As PivotTable
+    Dim pf As PivotField
+    Dim pi As PivotItem
+    Dim pi2 As PivotItem
+    Dim rngList As range
+    Dim strMsg As String
+    ' change sheet and range    Set rngList = Worksheets("List").Range("A1:A10")
+     
+    Set pt = ActiveSheet.PivotTables(1)
+    
+    ' change field as needed
+    Set pf = pt.PivotFields("Personnel Area")
+
+    For Each pi In pf.PivotItems
+    
+    pi.Visible = True
+        For Each pi2 In pf.PivotItems
+         If pi <> pi2 Then
+          pi2.Visible = False
+          Else
+           pt.TableRange1.Copy: range("F4").PasteSpecial (xlPasteValuesAndNumberFormats)
+             pt.TableRange1.Copy: range("F4").PasteSpecial (xlPasteFormats)
+             Dim srcRangePivot As range
+             Dim DestRangepivot As range
+             
+             ' Define the source range to copy
+              Set srcRangePivot = SourceWorksheet.range("A6:D20")
+              If pi = "A099" Then
+              Set DestRangepivot = targetWorksheet.range("A22:D36")
+              ElseIf pi = "A396" Then
+              Set DestRangepivot = targetWorksheet.range("F22:I36")
+              ElseIf pi = "A928" Then
+              Set DestRangepivot = targetWorksheet.range("K22:N36")
+              ElseIf pi = "AA21" Then
+              Set DestRangepivot = targetWorksheet.range("P22:S36")
+              ElseIf pi = "AA88" Then
+              Set DestRangepivot = targetWorksheet.range("U22:X36")
+              ElseIf pi = "S106" Then
+              Set DestRangepivot = targetWorksheet.range("Z22:AC36")
+              ElseIf pi = "S109" Then
+              Set DestRangepivot = targetWorksheet.range("AE22:AH36")
+              ElseIf pi = "S110" Then
+              Set DestRangepivot = targetWorksheet.range("AJ22:AM36")
+              ElseIf pi = "S115" Then
+              Set DestRangepivot = targetWorksheet.range("AJ22:AM36")
+              ElseIf pi = "S119" Then
+              Set DestRangepivot = targetWorksheet.range("AT22:AW36")
+              ElseIf pi = "S121" Then
+              Set DestRangepivot = targetWorksheet.range("AY22:BB36")
+              ElseIf pi = "S127" Then
+              Set DestRangepivot = targetWorksheet.range("BD22:BG36")
+              ElseIf pi = "S131" Then
+              Set DestRangepivot = targetWorksheet.range("BI22:BL36")
+              ElseIf pi = "S134" Then
+              Set DestRangepivot = targetWorksheet.range("BN22:BQ36")
+               ElseIf pi = "S136" Then
+              Set DestRangepivot = targetWorksheet.range("BS22:BV36")
+               ElseIf pi = "S141" Then
+              Set DestRangepivot = targetWorksheet.range("BX22:CA36")
+               ElseIf pi = "S148" Then
+              Set DestRangepivot = targetWorksheet.range("CC22:CF36")
+             End If
+            
+             ' Copy the data from the source range
+                srcRangePivot.Copy DestRangepivot
+              
+              End If
+        Next pi2
+    Next pi
+    If Len(strMsg) > 0 Then MsgBox "The following items were not found in the list:" & strMsg
+End Sub
+
+
+
+Sub ListMissingItems3()
+    Dim SourceWorkbook As Workbook
+    Dim targetWorkbook As Workbook
+    Dim SourceWorksheet As Worksheet
+    Dim targetWorksheet As Worksheet
+    Dim pt As PivotTable
+    Dim pf As PivotField
+    Dim pi As PivotItem
+    Dim sourceRange As range
+    Dim destRange As range
+    Dim rngList As range
+    Dim strMsg As String
+    Dim searchValue As Variant
+    Dim searchRange As range
+    Dim foundCell As range
+    Dim fcell As range
+    Dim FilePaths As Variant
+    Dim range As range
+    ' Use the GetOpenFilename function to select multiple Excel files
+    FilePaths = Application.GetOpenFilename("Excel Files (*.xls; *.xlsx; *.xlsb), *.xls; *.xlsx; *.xlsb", , "Select Multiple Excel Files", , True)
+    
+    ' Check if the user selected any files
+    If IsArray(FilePaths) Then
+        ' Loop through the selected file paths
+        For i = LBound(FilePaths) To UBound(FilePaths)
+            Debug.Print FilePaths(i) ' Display each selected file path
+        Next i
+    ElseIf FilePaths <> "False" Then
+        ' User selected a single file
+        Debug.Print FilePaths ' Display the selected file path
+    End If
+    
+    ' Open the selected source workbook
+    Set SourceWorkbook = Workbooks.Open("Global Headcount.xlsx")
+    ' Set the target workbook (the active workbook)
+    Set targetWorkbook = Workbooks.Open("Final Ouput.xlsb")
+        
+    ' Set the source and target worksheets
+    Set SourceWorksheet = SourceWorkbook.Sheets("Sheet1") ' Replace with the source sheet name
+    Set targetWorksheet = targetWorkbook.Sheets("Summary") ' Replace with the target sheet name
+    
+    Set pt = SourceWorksheet.PivotTables(1)
+    
+    ' change field as needed
+    Set pf = pt.PivotFields("Personnel Area")
+    ' delete
+    Set range = targetWorksheet.range("A3").Resize(targetWorksheet.UsedRange.Rows.Count, lastColumn + 3)
+    range.EntireRow.Delete
+            
+    For Each pi In pf.PivotItems
+      pi.Visible = True
+        For Each pi2 In pf.PivotItems
+             If pi <> pi2 Then
+              pi2.Visible = False
+             Else
+                ' Define the source range to copy
+                Set sourceRange = SourceWorksheet.range("A6:D20")
+                ' Find the last column with data in row 1
+                lastColumn = targetWorksheet.Cells(1, targetWorksheet.Columns.Count).End(xlToLeft).Column
+                Dim lastRows As Long
+    
+                ' Set the search range from column A to the last column
+                Set searchRange = targetWorksheet.range(targetWorksheet.Cells(1, 1), targetWorksheet.Cells(1, lastColumn))
+            
+                ' Use the Find method to search for the value in the range
+                 Set foundCell = searchRange.Find(What:=pi, LookIn:=xlValues, LookAt:=xlWhole)
+                 foundCell.Select
+                 If foundCell = pi Then
+                
+                      Set fcell = foundCell.Offset(2, -1)
+                      fcell.Select
+                     
+                      Set destRange = fcell
+                      destRange.Select
+                
+                 End If
+ 
+                 pt.TableRange1.Copy: destRange.PasteSpecial (xlPasteValuesAndNumberFormats)
+                 pt.TableRange1.Copy: destRange.PasteSpecial (xlPasteFormats)
+                 
+              End If
+      Next pi2
+    Next pi
+    
+    MessageBox_vbInformation
+    
+    If Len(strMsg) > 0 Then MsgBox "The following items were not found in the list:" & strMsg
+    
+End Sub
+
+
+------------remove column labels from header 
+Sub RemoveColumnLabels()
+    Dim TargetWorkbook As Workbook
+    Dim TargetWorksheet As Worksheet
+    Dim cell As range
+    
+    ' Set the target workbook (the active workbook)
+    Set TargetWorkbook = Workbooks.Open("Final Ouput.xlsb")
+    
+    ' Set the target worksheet where the table is located
+    Set TargetWorksheet = TargetWorkbook.Sheets("Summary") ' Replace with your sheet name
+    
+    ' Loop through the cells in the third row (header row)
+    For Each cell In TargetWorksheet.Rows(3).Cells
+        If cell.Value = "Count of Employee Basic Data" Or cell.Value = "Column Labels" Then
+            cell.EntireRow.Delete ' Clear the cell contents to remove the labels
+        End If
+    Next cell
+     For Each cell In TargetWorksheet.Rows(3).Cells
+        If cell.Value = "Row Labels" Then
+            cell.Value = "Branch" ' Replace "Row Labels" with "Branch"
+            'cell.Value.Interior.Color = RGB(142, 169, 219)
+        End If
+    Next cell
+End Sub
