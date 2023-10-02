@@ -1,0 +1,191 @@
+Here we mapped Acq/NonAcq data from Workbook(Acq_non acq Mapping file.xls).Worksheet(Sheet1)to Workbook(HC and Exit Final Working.xls).worksheet(Current HC)using Vlookup
+Sub MapDataAcq_NonAcq()
+    Dim sourceWorkbook As Workbook
+    Dim targetWorkbook As Workbook
+    Dim sourceWorksheet As Worksheet
+    Dim targetWorksheet As Worksheet
+    Dim lastRow As Long
+    Dim i As Long
+    
+    ' Prompt the user to select the source file
+    Dim srcfilePath As String
+   Dim targetfilePath As String
+    srcfilePath = Application.GetOpenFilename("Excel Files (*.xls; *.xlsx; *.xlsb), *.xls; *.xlsx; *.xlsb")
+   targetfilePath = Application.GetOpenFilename("Excel Files (*.xls; *.xlsx; *.xlsb), *.xls; *.xlsx; *.xlsb")
+    ' Check if the user selected a file
+    If srcfilePath <> "False" Then
+        ' Open the selected source workbook
+        Set sourceWorkbook = Workbooks.Open(srcfilePath)
+        
+        ' Set the target workbook (the active workbook)
+        Set targetWorkbook = Workbooks.Open(targetfilePath)
+        
+        ' Set the source and target worksheets
+        Set sourceWorksheet = sourceWorkbook.Sheets("Current HC") ' Replace with the source sheet name
+        Set targetWorksheet = targetWorkbook.Sheets("Sheet1") ' Replace with the target sheet name
+        
+        ' Find the last row with data in the source worksheet
+        lastRow = sourceWorksheet.Cells(sourceWorksheet.Rows.Count, "AU").End(xlUp).Row
+        
+        ' Loop through the source data and map it to the target workbook using VLOOKUP
+        For i = 2 To lastRow ' Assuming data starts from row 2 and ID is in column A
+            Dim PA As Variant
+            Dim mappedValue As Variant
+            'Set PA = sourceWorksheet.Range(“AU2”)
+            PA = sourceWorksheet.Cells(i, 47).Value ' Assumes ID is in column A
+            ' Perform VLOOKUP in the target workbook on the second column (column B)
+            'mappedValue = Application.VLookup(sourceWorksheet.Range("AU2"), targetWorksheet.Range("A:B"), 2, False)
+             mappedValue = Application.VLookup(PA, targetWorksheet.Range("A:B"), 2, False)
+            ' Check if the ID was found and map the value to the source workbook
+            If Not IsError(mappedValue) Then
+                sourceWorksheet.Cells(i, 98).Value = mappedValue ' Map to the second column in the source workbook
+                Else
+                MsgBox "Value not found."
+            End If
+        Next i
+        
+        ' Close the source workbook without saving changes
+        
+        With sourceWorkbook
+        .RefreshAll
+        .Save
+        .Close
+    End With
+     With targetWorkbook
+        .Save
+        .Close
+    End With
+    MsgBox ("Mapping Acq/NonAcq data and refreshing HCPivote has been successfully Completed. ")
+    Else
+        MsgBox "No file selected. Exiting."
+    End If
+End Sub
+
+
+Sub MapDataAcq_NonAcq()
+    Dim sourceWorkbook As Workbook
+    Dim targetWorkbook As Workbook
+    Dim sourceWorksheet As Worksheet
+    Dim targetWorksheet As Worksheet
+    Dim lastRow As Long
+    Dim i As Long
+    
+    ' Prompt the user to select the source file
+    Dim srcfilePath As String
+   Dim targetfilePath As String
+    srcfilePath = Application.GetOpenFilename("Excel Files (*.xls; *.xlsx; *.xlsb), *.xls; *.xlsx; *.xlsb")
+   targetfilePath = Application.GetOpenFilename("Excel Files (*.xls; *.xlsx; *.xlsb), *.xls; *.xlsx; *.xlsb")
+    ' Check if the user selected a file
+    If srcfilePath <> "False" Then
+        ' Open the selected source workbook
+        Set sourceWorkbook = Workbooks.Open(srcfilePath)
+        
+        ' Set the target workbook (the active workbook)
+        Set targetWorkbook = Workbooks.Open(targetfilePath)
+        
+        ' Set the source and target worksheets
+        Set sourceWorksheet = sourceWorkbook.Sheets("Current HC") ' Replace with the source sheet name
+        Set targetWorksheet = targetWorkbook.Sheets("Sheet1") ' Replace with the target sheet name
+        
+        ' Find the last row with data in the source worksheet
+        lastRow = sourceWorksheet.Cells(sourceWorksheet.Rows.Count, "AU").End(xlUp).Row
+        
+        ' Loop through the source data and map it to the target workbook using VLOOKUP
+        For i = 2 To lastRow ' Assuming data starts from row 2 and ID is in column A
+            Dim PA As Variant
+            Dim mappedValue As Variant
+            'Set PA = sourceWorksheet.Range(“AU2”)
+            PA = sourceWorksheet.Cells(i, 47).Value ' Assumes ID is in column A
+            ' Perform VLOOKUP in the target workbook on the second column (column B)
+            'mappedValue = Application.VLookup(sourceWorksheet.Range("AU2"), targetWorksheet.Range("A:B"), 2, False)
+             mappedValue = Application.VLookup(PA, targetWorksheet.Range("A:B"), 2, False)
+            ' Check if the ID was found and map the value to the source workbook
+            If Not IsError(mappedValue) Then
+                sourceWorksheet.Cells(i, 98).Value = mappedValue ' Map to the second column in the source workbook
+                Else
+                MsgBox "Value not found."
+            End If
+        Next i
+        
+        ' Close the source workbook without saving changes
+        
+        With sourceWorkbook
+        .RefreshAll
+        .Save
+        .Close
+    End With
+     With targetWorkbook
+        .Save
+        .Close
+    End With
+    MsgBox ("Mapping Acq/NonAcq data and refreshing HCPivote has been successfully Completed. ")
+    Else
+        MsgBox "No file selected. Exiting."
+    End If
+End Sub
+
+
+#NA
+1) Vol
+2) Org 2 Eviden
+3) Personal Area except S127
+4) Employee Group include A1,A2, and A4
+
+
+
+Sub MapDataEmployeebasicdata()
+    Dim sourceWorkbook As Workbook
+    Dim targetWorkbook As Workbook
+    Dim sourceWorksheet As Worksheet
+    Dim targetWorksheet As Worksheet
+    Dim srclastRow As Long
+    Dim i As Long
+    Dim Emp_basic_Data As Variant
+    Dim mappedValue As Variant
+     Dim srcfilePath As String
+   
+    'Dim targetfilePath As String
+     srcfilePath = Application.GetOpenFilename("Excel Files (*.xls; *.xlsx; *.xlsb), *.xls; *.xlsx; *.xlsb")
+    
+    ' Check if the user selected a file
+    If srcfilePath <> "False" Then
+        
+    ' Open the selected source workbook
+    Set sourceWorkbook = Workbooks.Open(srcfilePath)
+          
+    ' Set the source and target worksheets
+    Set sourceWorksheet = sourceWorkbook.Sheets("Last Month HC") ' Replace with the source sheet name
+    Set targetWorksheet = sourceWorkbook.Sheets("Current HC") ' Replace with the target sheet name
+        
+    ' Find the last row with data in the source worksheet
+    lastRow = sourceWorksheet.Cells(sourceWorksheet.Rows.Count, "H").End(xlUp).Row
+        
+    ' Loop through the source data and map it to the target workbook using VLOOKUP
+    For i = 2 To lastRow ' Assuming data starts from row 2 and ID is in column A
+         
+            Emp_basic_Data = sourceWorksheet.Cells(i, 8).Value ' Assumes ID is in column A
+            ' Perform VLOOKUP in the target workbook on the second column (column B)
+            
+            ' mappedValue = Application.VLookup(Emp_basic_Data, targetWorksheet.Range("A2:H"), 8, False)
+             mappedValue = Application.VLookup(Emp_basic_Data, targetWorksheet.cell(i, 8), 8, False)
+            ' Check if the ID was found and map the value to the source workbook
+            If Not IsError(mappedValue) Then
+                sourceWorksheet.Cells(i, 101).Value = mappedValue ' Map to the second column in the source workbook
+                Else
+                MsgBox "Value not found."
+            End If
+        Next i
+        
+        ' Close the source workbook without saving changes
+        With sourceWorkbook
+        .RefreshAll
+        .Save
+        .Close
+    End With
+     
+    MsgBox ("Mapping EMployee basic Data data and refreshing HCPivote has been successfully Completed. ")
+    Else
+        MsgBox "No file selected. Exiting."
+    End If
+End Sub
+
